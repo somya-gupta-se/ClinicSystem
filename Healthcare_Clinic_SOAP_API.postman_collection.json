@@ -1,0 +1,460 @@
+{
+  "info": {
+    "name": "Healthcare Clinic SOAP Integration API",
+    "description": "Complete API collection for Healthcare Clinic System with SOAP integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"TestPass123!\",\n  \"fullName\": \"Test User\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"TestPass123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctors - Local",
+      "item": [
+        {
+          "name": "Get All Local Doctors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctors",
+              "host": ["{{base_url}}"],
+              "path": ["doctors"]
+            }
+          }
+        },
+        {
+          "name": "Get Doctor by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctors/1",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Doctors by Specialty",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctors/specialty/Cardiology",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "specialty", "Cardiology"]
+            }
+          }
+        },
+        {
+          "name": "Create Doctor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nameEnglish\": \"Dr. New Doctor\",\n  \"nameArabic\": \"د. دكتور جديد\",\n  \"specialty\": \"Neurology\",\n  \"yearsOfExperience\": 8,\n  \"consultationDuration\": 40\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/doctors",
+              "host": ["{{base_url}}"],
+              "path": ["doctors"]
+            }
+          }
+        },
+        {
+          "name": "Update Doctor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nameEnglish\": \"Dr. Updated Name\",\n  \"nameArabic\": \"د. اسم محدث\",\n  \"specialty\": \"Cardiology\",\n  \"yearsOfExperience\": 16,\n  \"consultationDuration\": 35\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/doctors/1",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Doctor",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctors/1",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctors - SOAP Integration",
+      "item": [
+        {
+          "name": "Get Doctors from External SOAP Service",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "description": "Fetches doctors from external SOAP web service with caching. Falls back to local DB if service fails.",
+            "url": {
+              "raw": "{{base_url}}/doctors/external",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "external"]
+            }
+          }
+        },
+        {
+          "name": "Sync External SOAP Doctors to Local DB",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "description": "Synchronizes doctors from external SOAP service to local database. Skips duplicates.",
+            "url": {
+              "raw": "{{base_url}}/doctors/sync-external",
+              "host": ["{{base_url}}"],
+              "path": ["doctors", "sync-external"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "Register Patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullNameEnglish\": \"Ahmed Hassan\",\n  \"fullNameArabic\": \"أحمد حسن\",\n  \"email\": \"ahmed@example.com\",\n  \"mobileNumber\": \"+971501234567\",\n  \"dateOfBirth\": \"1990-05-15\",\n  \"nationalId\": \"123456789\",\n  \"address\": {\n    \"street\": \"123 Main Street\",\n    \"city\": \"Dubai\",\n    \"region\": \"Emirate of Dubai\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/patients/register",
+              "host": ["{{base_url}}"],
+              "path": ["patients", "register"]
+            }
+          }
+        },
+        {
+          "name": "Get All Patients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/patients",
+              "host": ["{{base_url}}"],
+              "path": ["patients"]
+            }
+          }
+        },
+        {
+          "name": "Get Patient by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/patients/1",
+              "host": ["{{base_url}}"],
+              "path": ["patients", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Patient",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullNameEnglish\": \"Ahmed Hassan Updated\",\n  \"fullNameArabic\": \"أحمد حسن محدث\",\n  \"mobileNumber\": \"+971509876543\",\n  \"address\": {\n    \"street\": \"456 New Street\",\n    \"city\": \"Abu Dhabi\",\n    \"region\": \"Emirate of Abu Dhabi\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/patients/1",
+              "host": ["{{base_url}}"],
+              "path": ["patients", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Patient",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/patients/1",
+              "host": ["{{base_url}}"],
+              "path": ["patients", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Schedule Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 1,\n  \"doctorId\": 1,\n  \"appointmentDateTime\": \"2026-03-25T14:30:00\",\n  \"reason\": \"Regular checkup\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments/schedule",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "schedule"]
+            }
+          }
+        },
+        {
+          "name": "Get All Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/appointments",
+              "host": ["{{base_url}}"],
+              "path": ["appointments"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/appointments/1",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 1,\n  \"doctorId\": 2,\n  \"appointmentDateTime\": \"2026-03-26T15:00:00\",\n  \"reason\": \"Follow-up consultation\",\n  \"status\": \"RESCHEDULED\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/appointments/1",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Appointment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/appointments/1",
+              "host": ["{{base_url}}"],
+              "path": ["appointments", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "jwt_token",
+      "value": ""
+    }
+  ]
+}
+
