@@ -28,6 +28,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         Patient patient = patientRepo.findById(dto.patientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 
+        //check if patient not exist or if its isDeleted flag is true
+        if(patient.isDeleted()){
+            throw new ResourceNotFoundException("Patient not found");
+        }
+
         Doctor doctor = doctorRepo.findById(dto.doctorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
 
@@ -35,6 +40,13 @@ public class AppointmentServiceImpl implements AppointmentService {
                 doctor.getId(), dto.appointmentDate(), dto.appointmentTime())) {
             throw new DuplicateResourceException("Slot already booked for this doctor at the specified time");
         }
+
+        //if patient is trying to book multiple appointments at the same time, we can also check for that
+        if (appointmentRepo.existsByPatientIdAndAppointmentDateAndAppointmentTime(
+                patient.getId(), dto.appointmentDate(), dto.appointmentTime())) {
+            throw new DuplicateResourceException("Patient already has an appointment at the specified time");
+        }
+
 
         Appointment appointment = Appointment.builder()
                 .patient(patient)
@@ -56,6 +68,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         Doctor doctor = doctorRepo.findById(dto.doctorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
 
+        // Check if the new time slot is already booked for the doctor (excluding the current appointment)
         if (appointmentRepo.existsByDoctorIdAndAppointmentDateAndAppointmentTime(
                 doctor.getId(), dto.appointmentDate(), dto.appointmentTime())) {
             throw new DuplicateResourceException("Slot already booked for this doctor at the specified time");
@@ -69,7 +82,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getAllAppointments() {
-        return appointmentRepo.findAll();
+        return appointmentRepo.findAllWithPatientAndDoctor();
     }
 
     @Override

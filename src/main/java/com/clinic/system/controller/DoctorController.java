@@ -21,7 +21,6 @@ public class DoctorController {
 
     private final DoctorService service;
 
-    @Cacheable(value = "doctors")
     @GetMapping
     public ResponseEntity<ApiResponseDTO<List<DoctorResponseDTO>>> getAllDoctors() {
         List<Doctor> doctors = service.getAllDoctors();

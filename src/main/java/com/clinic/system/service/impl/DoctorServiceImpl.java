@@ -23,11 +23,11 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Doctor createDoctor(DoctorRequestDTO dto) {
         Doctor doctor = Doctor.builder()
-                .nameEnglish(dto.getNameEnglish())
-                .nameArabic(dto.getNameArabic())
-                .specialty(dto.getSpecialty())
-                .yearsOfExperience(dto.getYearsOfExperience())
-                .consultationDuration(dto.getConsultationDuration())
+                .nameEnglish(dto.nameEnglish())
+                .nameArabic(dto.nameArabic())
+                .specialty(dto.specialty())
+                .yearsOfExperience(dto.yearsOfExperience())
+                .consultationDuration(dto.consultationDuration())
                 .build();
 
         return repository.save(doctor);
@@ -52,16 +52,16 @@ public class DoctorServiceImpl implements DoctorService {
         return repository.findBySpecialty(specialty);
     }
 
-    @Cacheable(value = "doctors", key = "#id")
+    @CacheEvict(value = "doctors", key = "#id")
     @Override
     public Doctor updateDoctor(Long id, DoctorRequestDTO dto) {
         Doctor doctor = getDoctorById(id);
 
-        doctor.setNameEnglish(dto.getNameEnglish());
-        doctor.setNameArabic(dto.getNameArabic());
-        doctor.setSpecialty(dto.getSpecialty());
-        doctor.setYearsOfExperience(dto.getYearsOfExperience());
-        doctor.setConsultationDuration(dto.getConsultationDuration());
+        doctor.setNameEnglish(dto.nameEnglish());
+        doctor.setNameArabic(dto.nameArabic());
+        doctor.setSpecialty(dto.specialty());
+        doctor.setYearsOfExperience(dto.yearsOfExperience());
+        doctor.setConsultationDuration(dto.consultationDuration());
 
         return repository.save(doctor);
     }

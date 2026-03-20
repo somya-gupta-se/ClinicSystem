@@ -23,7 +23,6 @@ public record AppointmentRequestDTO(
         LocalDate appointmentDate,
 
         @NotNull(message = "Appointment time is required")
-        @Future(message = "Appointment must be in the future")
         LocalTime appointmentTime,
 
         String reason

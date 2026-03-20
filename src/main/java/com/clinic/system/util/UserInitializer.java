@@ -33,7 +33,7 @@ public class UserInitializer implements CommandLineRunner {
                             .createdAt(LocalDateTime.now())
                             .build(),
                     User.builder()
-                            .username("doctor1")
+                            .username("doctor")
                             .email("doctor@clinic.com")
                             .password(passwordEncoder.encode("doctor123"))
                             .fullName("Doctor User")

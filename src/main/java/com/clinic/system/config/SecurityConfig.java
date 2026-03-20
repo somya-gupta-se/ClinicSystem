@@ -1,5 +1,7 @@
 package com.clinic.system.config;
 
+import com.clinic.system.security.JwtAccessDeniedHandler;
+import com.clinic.system.security.JwtAuthenticationEntryPoint;
 import com.clinic.system.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,14 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
 
     private static final String[] PUBLIC_ENDPOINTS = {
             "/auth/login",
             "/auth/register",
+            "/auth/refresh",
             "/h2-console/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
@@ -49,12 +54,25 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    /*
+        * Configure security filter chain
+        * - Disable CSRF since we're using JWTs
+        * - Enable CORS with custom configuration
+        * - Set session management to stateless
+        * - Configure exception handling for unauthorized and access denied
+        * - Define public endpoints and require authentication for others
+        * - Add JWT filter before the UsernamePasswordAuthenticationFilter
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()

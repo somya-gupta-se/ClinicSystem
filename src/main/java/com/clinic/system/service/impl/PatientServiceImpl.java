@@ -6,6 +6,7 @@ import com.clinic.system.entity.Address;
 import com.clinic.system.entity.Patient;
 import com.clinic.system.exception.DuplicateResourceException;
 import com.clinic.system.exception.ResourceNotFoundException;
+import com.clinic.system.repository.AppointmentRepository;
 import com.clinic.system.repository.PatientRepository;
 import com.clinic.system.service.PatientService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,42 +25,43 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository repository;
     private final NotificationService notificationService;
+    private final AppointmentRepository appointmentRepository;
 
 
     @Override
     public Patient registerPatient(PatientRequestDTO dto) {
 
-        if (repository.existsByEmail(dto.getEmail())) {
+        if (repository.existsByEmail(dto.email())) {
             throw new DuplicateResourceException("Email already exists");
         }
 
-        if (repository.existsByNationalId(dto.getNationalId())) {
+        if (repository.existsByNationalId(dto.nationalId())) {
             throw new DuplicateResourceException("National ID already exists");
         }
 
         Patient patient = Patient.builder()
-                .fullNameEnglish(dto.getFullNameEnglish())
-                .fullNameArabic(dto.getFullNameArabic())
-                .email(dto.getEmail())
-                .mobileNumber(dto.getMobileNumber())
-                .dateOfBirth(dto.getDateOfBirth())
-                .nationalId(dto.getNationalId())
+                .fullNameEnglish(dto.fullNameEnglish())
+                .fullNameArabic(dto.fullNameArabic())
+                .email(dto.email())
+                .mobileNumber(dto.mobileNumber())
+                .dateOfBirth(dto.dateOfBirth())
+                .nationalId(dto.nationalId())
                 .createdAt(LocalDateTime.now())
                 .address(mapAddress(dto))
                 .build();
         // Async call (non-blocking)
-        notificationService.sendPatientRegistrationNotification(dto.getFullNameEnglish());
+        notificationService.sendPatientRegistrationNotification(dto.fullNameEnglish());
         return repository.save(patient);
     }
 
     private Address mapAddress(PatientRequestDTO dto) {
-        if (dto.getAddress() == null) {
+        if (dto.address() == null) {
             return null;
         }
         Address address = new Address();
-        address.setStreet(dto.getAddress().getStreet());
-        address.setCity(dto.getAddress().getCity());
-        address.setRegion(dto.getAddress().getRegion());
+        address.setStreet(dto.address().street());
+        address.setCity(dto.address().city());
+        address.setRegion(dto.address().region());
         return address;
     }
 
@@ -71,11 +74,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public void deletePatient(Long id) {
         Patient patient = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found"));
 
+        // Soft delete patient
         patient.setDeleted(true);
         repository.save(patient);
+
+        // Hard delete all appointments for this patient (thus releasing slots)
+        appointmentRepository.deleteByPatientId(id);
     }
 }

@@ -9,6 +9,8 @@ public interface AuthService {
 
     AuthResponseDTO register(String username, String email, String password, String fullName);
 
-    void logout(String username);
+    void logout(String username, String token);
+
+    AuthResponseDTO refreshToken(String refreshToken);
 }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Component
@@ -19,8 +20,11 @@ public class JwtUtil {
     @Value("${jwt.secret:MyVerySecureSecretKeyFor256BitHSAlgorithmThatIsAtLeast32CharactersLong}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration:86400000}")
-    private long jwtExpiration; // 24 hours in milliseconds
+    @Value("${jwt.expiration:300000}")
+    private long jwtExpiration; // 5 mins in milliseconds
+
+    @Value("${jwt.refresh-expiration:600000}")
+    private long jwtRefreshExpiration; // 10 mins in milliseconds
 
 
     private SecretKey getSigningKey() {
@@ -32,10 +36,29 @@ public class JwtUtil {
             throw new IllegalArgumentException("Username cannot be null or empty");
         }
 
+        String tokenId = UUID.randomUUID().toString();
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .claim("jti", tokenId)
+                .claim("type", "access")
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+
+        String tokenId = UUID.randomUUID().toString();
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtRefreshExpiration))
+                .claim("jti", tokenId)
+                .claim("type", "refresh")
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -135,6 +158,44 @@ public class JwtUtil {
 
     public long getExpirationTime() {
         return jwtExpiration;
+    }
+
+    public String extractTokenId(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new IllegalArgumentException("Token cannot be null or empty");
+        }
+        try {
+            return extractClaim(token, claims -> claims.get("jti", String.class));
+        } catch (Exception e) {
+            log.error("Error extracting token ID: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public String extractTokenType(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new IllegalArgumentException("Token cannot be null or empty");
+        }
+        try {
+            return extractClaim(token, claims -> claims.get("type", String.class));
+        } catch (Exception e) {
+            log.error("Error extracting token type: {}", e.getMessage());
+            return null;
+        }
+    }
+
+    public Boolean isAccessToken(String token) {
+        String type = extractTokenType(token);
+        return "access".equals(type);
+    }
+
+    public Boolean isRefreshToken(String token) {
+        String type = extractTokenType(token);
+        return "refresh".equals(type);
+    }
+
+    public long getRefreshTokenExpirationTime() {
+        return jwtRefreshExpiration;
     }
 }
 

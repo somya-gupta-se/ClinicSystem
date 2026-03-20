@@ -4,20 +4,20 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Data
-public class DoctorRequestDTO {
+
+public record DoctorRequestDTO (
 
     @NotBlank(message = "Name in English is required")
-    private String nameEnglish;
+    String nameEnglish,
 
-    private String nameArabic;
+     String nameArabic,
 
     @NotBlank(message = "Specialty is required")
-    private String specialty;
+     String specialty,
 
     @Min(value = 0, message = "Years of experience must be non-negative")
-    private int yearsOfExperience;
+     int yearsOfExperience,
 
-    private int consultationDuration;
+     int consultationDuration){
 }
 
