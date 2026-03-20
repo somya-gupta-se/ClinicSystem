@@ -1,5 +1,6 @@
 package com.clinic.system.service.impl;
 
+import com.clinic.system.async.NotificationService;
 import com.clinic.system.dto.request.PatientRequestDTO;
 import com.clinic.system.entity.Address;
 import com.clinic.system.entity.Patient;
@@ -8,6 +9,9 @@ import com.clinic.system.exception.ResourceNotFoundException;
 import com.clinic.system.repository.PatientRepository;
 import com.clinic.system.service.PatientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +22,7 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository repository;
-
+    private final NotificationService notificationService;
 
 
     @Override
@@ -42,7 +46,8 @@ public class PatientServiceImpl implements PatientService {
                 .createdAt(LocalDateTime.now())
                 .address(mapAddress(dto))
                 .build();
-
+        // Async call (non-blocking)
+        notificationService.sendPatientRegistrationNotification(dto.getFullNameEnglish());
         return repository.save(patient);
     }
 

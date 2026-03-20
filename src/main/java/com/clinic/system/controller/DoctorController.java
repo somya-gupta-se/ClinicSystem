@@ -6,6 +6,7 @@ import com.clinic.system.dto.response.DoctorResponseDTO;
 import com.clinic.system.entity.Doctor;
 import com.clinic.system.service.DoctorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class DoctorController {
 
     private final DoctorService service;
 
+    @Cacheable(value = "doctors")
     @GetMapping
     public ResponseEntity<ApiResponseDTO<List<DoctorResponseDTO>>> getAllDoctors() {
         List<Doctor> doctors = service.getAllDoctors();

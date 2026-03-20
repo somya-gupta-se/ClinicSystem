@@ -11,8 +11,7 @@ import com.clinic.system.security.JwtUtil;
 import com.clinic.system.service.AuthService;
 import com.clinic.system.service.PatientService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,16 +23,13 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
-
-
-
-    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO dto) {

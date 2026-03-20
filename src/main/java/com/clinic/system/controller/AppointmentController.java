@@ -6,6 +6,7 @@ import com.clinic.system.dto.response.AppointmentResponseDTO;
 import com.clinic.system.entity.Appointment;
 import com.clinic.system.service.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +20,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/appointments")
 @RequiredArgsConstructor
+@Slf4j
 public class AppointmentController {
 
     private final AppointmentService service;
 
-    @PostMapping("schedule")
+    @PostMapping("/schedule")
     public ResponseEntity<ApiResponseDTO<AppointmentResponseDTO>> create(@Valid @RequestBody AppointmentRequestDTO dto) {
         Appointment appointment = service.scheduleAppointment(dto);
         AppointmentResponseDTO response = mapToAppointmentResponseDTO(appointment);
-
+        log.info("Scheduling appointment for patient {}", dto.patientId());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponseDTO.success(response, "Appointment scheduled successfully"));
     }

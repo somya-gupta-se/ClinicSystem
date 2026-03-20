@@ -4,8 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,7 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value("${jwt.secret:MyVerySecureSecretKeyFor256BitHSAlgorithmThatIsAtLeast32CharactersLong}")
@@ -22,7 +22,6 @@ public class JwtUtil {
     @Value("${jwt.expiration:86400000}")
     private long jwtExpiration; // 24 hours in milliseconds
 
-    private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
