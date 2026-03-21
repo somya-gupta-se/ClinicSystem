@@ -244,6 +244,10 @@ CREATE TABLE appointments (
 );
 ```
 
+## Important Note
+
+The actual database schema may differ slightly from the above SQL depending on Hibernate naming strategy and entity annotations.
+
 ### Pre-loaded Sample Data
 
 **Doctors:**
@@ -252,6 +256,7 @@ CREATE TABLE appointments (
 3. Dr. Mohammed Al-Dosari - Orthopedics (18 years)
 4. Dr. Layla Al-Qahtani - Dermatology (10 years)
 5. Dr. Samir Al-Otaibi - General Medicine (8 years)
+and more...
 
 **Users:**
 | Username | Password | Role |
