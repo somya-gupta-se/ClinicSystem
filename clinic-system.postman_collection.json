@@ -1,0 +1,1130 @@
+{
+  "info": {
+    "_postman_id": "92ea4d7c-720f-4097-b62a-52534f6276ee",
+    "name": "clinic-system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26939739",
+    "_collection_link": "https://go.postman.co/collection/26939739-92ea4d7c-720f-4097-b62a-52534f6276ee?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "registerUser",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"testuser\",\r\n  \"email\": \"testuser@clinic.com\",\r\n  \"password\": \"Password@123\",\r\n  \"fullName\": \"Test User\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/auth/register",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/auth/register' \\\r\n--header 'Content-Type: application/json' \\\r\n--data '{\r\n  \"username\": \"testuser\",\r\n  \"email\": \"testuser@clinic.com\",\r\n  \"password\": \"Password@123\",\r\n  \"fullName\": \"Test User\"\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"usernameOrEmail\": \"admin\",\r\n  \"password\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/auth/login",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/auth/login' \\\r\n--header 'Content-Type: application/json' \\\r\n--data '{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin123\"\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "logout",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwNTMxMzQwMCwiZXhwIjoxNzA1Mzk5ODAwfQ.xyz123..."
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/auth/logout",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "auth",
+            "logout"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request POST 'http://localhost:8080/auth/logout' \\\r\n--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwNTMxMzQwMCwiZXhwIjoxNzA1Mzk5ODAwfQ.xyz123...'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "createDoctor",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc3Mzg4ODMxMCwiZXhwIjoxNzczOTc0NzEwfQ.HOG4Kd6yQPq7BsUHi0sDMp2qJ3iCegVMWLsD1fMGcBcKHTrrG3eRKRY8lcpYo6qiKnImCSbXWa-nJtE9YE6RxQ",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nameEnglish\": \"Dr. Sarah Johnson\",\r\n  \"nameArabic\": \"د. سارة جونسون\",\r\n  \"specialty\": \"CARDIOLOGY\",\r\n  \"yearsOfExperience\": 10,\r\n  \"consultationDurationMinutes\": 30\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/doctors",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/doctors' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN' \\\r\n--data '{\r\n  \"nameEnglish\": \"Dr. Sarah Johnson\",\r\n  \"nameArabic\": \"د. سارة جونسون\",\r\n  \"specialty\": \"CARDIOLOGY\",\r\n  \"yearsOfExperience\": 10,\r\n  \"consultationDurationMinutes\": 30\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "getAllDoctors",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/doctors",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/doctors' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "getDoctorByID",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/doctors/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/doctors/1' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "filterDocBySpclity",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/doctors/specialty/Cardiology",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors",
+            "specialty",
+            "Cardiology"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/doctors/specialty/CARDIOLOGY' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "updateDoctor",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nameEnglish\": \"updat Dr. Ahmed Ali Updated\",\r\n  \"nameArabic\": \"د. أحمد علي - محدث\",\r\n  \"specialty\": \"GENERAL\",\r\n  \"yearsOfExperience\": 16,\r\n  \"consultationDurationMinutes\": 35000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/doctors/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request PUT 'http://localhost:8080/doctors/1' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN' \\\r\n--data '{\r\n  \"nameEnglish\": \"Dr. Ahmed Ali Updated\",\r\n  \"nameArabic\": \"د. أحمد علي - محدث\",\r\n  \"specialty\": \"GENERAL\",\r\n  \"yearsOfExperience\": 16,\r\n  \"consultationDurationMinutes\": 35\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "deleteDoc",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/doctors/6",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "doctors",
+            "6"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request DELETE 'http://localhost:8080/doctors/6' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "scheduleAppointment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 1,\r\n  \"appointmentDate\": \"2026-04-15\",\r\n  \"appointmentTime\": \"18:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/appointments/schedule",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "appointments",
+            "schedule"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/appointments/schedule' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN' \\\r\n--data '{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 1,\r\n  \"appointmentDate\": \"2024-02-15\",\r\n  \"appointmentTime\": \"10:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}'\r\n"
+      },
+      "response": [
+        {
+          "name": "PatientNotFound",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 1,\r\n  \"appointmentDate\": \"2026-04-15\",\r\n  \"appointmentTime\": \"18:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/appointments/schedule",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "appointments",
+                "schedule"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 20 Mar 2026 11:39:02 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"Patient not found\",\n    \"status\": 404,\n    \"timestamp\": \"2026-03-20T17:09:02.7157917\",\n    \"path\": \"/api/appointments/schedule\",\n    \"validationErrors\": null\n}"
+        },
+        {
+          "name": "samePatientSameDocSameTime",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 1,\r\n  \"appointmentDate\": \"2026-04-15\",\r\n  \"appointmentTime\": \"18:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/appointments/schedule",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "appointments",
+                "schedule"
+              ]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 20 Mar 2026 12:35:55 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"Slot already booked for this doctor at the specified time\",\n    \"status\": 409,\n    \"timestamp\": \"2026-03-20T18:05:55.5305521\",\n    \"path\": \"/api/appointments/schedule\",\n    \"validationErrors\": null\n}"
+        },
+        {
+          "name": "DiffPatientSameDocSameTime",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": 2,\r\n  \"doctorId\": 1,\r\n  \"appointmentDate\": \"2026-04-15\",\r\n  \"appointmentTime\": \"18:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/appointments/schedule",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "appointments",
+                "schedule"
+              ]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 20 Mar 2026 12:36:46 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"Slot already booked for this doctor at the specified time\",\n    \"status\": 409,\n    \"timestamp\": \"2026-03-20T18:06:46.4141444\",\n    \"path\": \"/api/appointments/schedule\",\n    \"validationErrors\": null\n}"
+        },
+        {
+          "name": "DiffPatientSameTimeDiffDoc",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": 2,\r\n  \"doctorId\": 2,\r\n  \"appointmentDate\": \"2026-04-15\",\r\n  \"appointmentTime\": \"18:30\",\r\n  \"reason\": \"Regular checkup\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{host}}/appointments/schedule",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "appointments",
+                "schedule"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 20 Mar 2026 12:38:09 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"message\": \"Appointment scheduled successfully\",\n    \"data\": {\n        \"id\": 2,\n        \"patient\": {\n            \"id\": 2,\n            \"fullNameEnglish\": \"Ahmed Hassan\",\n            \"fullNameArabic\": \"أحمد حسن\",\n            \"email\": \"ahmed.hassan1@example.com\",\n            \"mobileNumber\": \"9701234567\",\n            \"dateOfBirth\": \"1990-05-15\",\n            \"nationalId\": \"123456789022\",\n            \"address\": {\n                \"street\": \"123 Main Street\",\n                \"city\": \"Dubai\",\n                \"region\": \"UAE\"\n            }\n        },\n        \"doctor\": {\n            \"id\": 2,\n            \"nameEnglish\": \"Dr. Fatima Al-Rashid\",\n            \"nameArabic\": \"د. فاطمة الراشد\",\n            \"specialty\": \"Pediatrics\",\n            \"yearsOfExperience\": 12,\n            \"consultationDuration\": 25\n        },\n        \"appointmentDate\": null,\n        \"appointmentTime\": \"18:30:00\",\n        \"status\": \"SCHEDULED\"\n    },\n    \"timestamp\": \"2026-03-20T18:08:09.0193254\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "getAllappointments",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/appointments",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "appointments"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/appointments' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "getAppointmentByID",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/appointments/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "appointments",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/appointments/1' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "updateAppointment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 2,\r\n  \"appointmentDate\": \"2026-04-30\",\r\n  \"appointmentTime\": \"14:00\",\r\n  \"reason\": \"Follow-up consultation\",\r\n  \"status\": \"SCHEDULED\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/appointments/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "appointments",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request PUT 'http://localhost:8080/appointments/1' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN' \\\r\n--data '{\r\n  \"patientId\": 1,\r\n  \"doctorId\": 2,\r\n  \"appointmentDate\": \"2024-02-16\",\r\n  \"appointmentTime\": \"14:00\",\r\n  \"reason\": \"Follow-up consultation\",\r\n  \"status\": \"SCHEDULED\"\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "deleteAppointment",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/appointments/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "appointments",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request DELETE 'http://localhost:8080/appointments/1' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": [
+        {
+          "name": "AppointmentNotFound",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN"
+              }
+            ],
+            "url": {
+              "raw": "{{host}}/appointments/1",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "appointments",
+                "1"
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Vary",
+              "value": "Origin"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Method"
+            },
+            {
+              "key": "Vary",
+              "value": "Access-Control-Request-Headers"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "0"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Fri, 20 Mar 2026 11:40:08 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"message\": \"Appointment not found\",\n    \"status\": 404,\n    \"timestamp\": \"2026-03-20T17:10:08.6754896\",\n    \"path\": \"/api/appointments/1\",\n    \"validationErrors\": null\n}"
+        }
+      ]
+    },
+    {
+      "name": "registerPatient",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"fullNameEnglish\": \"Ahmed Hassan\",\r\n  \"fullNameArabic\": \"أحمد حسن\",\r\n  \"email\": \"ahmed.hassan@example.com\",\r\n  \"mobileNumber\": \"9701234567\",\r\n  \"dateOfBirth\": \"1990-05-15\",\r\n  \"nationalId\": \"123456789022\",\r\n  \"address\": {\r\n    \"street\": \"123 Main Street\",\r\n    \"city\": \"Dubai\",\r\n    \"region\": \"UAE\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/patients/register",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "patients",
+            "register"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/patients/register' \\\r\n--header 'Content-Type: application/json' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN' \\\r\n--data '{\r\n  \"fullNameEnglish\": \"Ahmed Hassan\",\r\n  \"fullNameArabic\": \"أحمد حسن\",\r\n  \"email\": \"ahmed.hassan@example.com\",\r\n  \"mobileNumber\": \"+971501234567\",\r\n  \"dateOfBirth\": \"1990-05-15\",\r\n  \"nationalId\": \"12345678901\",\r\n  \"street\": \"123 Main Street\",\r\n  \"city\": \"Dubai\",\r\n  \"region\": \"UAE\"\r\n}'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "getAllPatients",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/patients",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "patients"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'http://localhost:8080/patients' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    },
+    {
+      "name": "deletePatient",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}/patients/1",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "patients",
+            "1"
+          ]
+        },
+        "description": "Generated from cURL: curl --location --request DELETE 'http://localhost:8080/patients/1' \\\r\n--header 'Authorization: Bearer YOUR_JWT_TOKEN'\r\n"
+      },
+      "response": []
+    }
+  ]
+}
