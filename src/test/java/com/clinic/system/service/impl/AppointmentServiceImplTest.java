@@ -38,7 +38,6 @@ class AppointmentServiceImplTest {
     @InjectMocks
     private AppointmentServiceImpl appointmentService;
 
-    // ------------------- scheduleAppointment -------------------
 
     @Test
     void scheduleAppointment_success() {
