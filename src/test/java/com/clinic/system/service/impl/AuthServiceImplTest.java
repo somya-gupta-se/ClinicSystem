@@ -80,8 +80,8 @@ class AuthServiceImplTest {
 
         when(jwtUtil.generateToken("testuser")).thenReturn("accessToken");
         when(jwtUtil.generateRefreshToken("testuser")).thenReturn("refreshToken");
-        when(jwtUtil.getExpirationTime()).thenReturn(300000L);
-        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(1200000L);
 
         AuthResponseDTO response = authService.login(dto);
 
@@ -113,8 +113,8 @@ class AuthServiceImplTest {
 
         when(jwtUtil.generateToken("testuser")).thenReturn("accessToken");
         when(jwtUtil.generateRefreshToken("testuser")).thenReturn("refreshToken");
-        when(jwtUtil.getExpirationTime()).thenReturn(300000L);
-        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(1200000L);
 
         when(userRepository.save(any(User.class))).thenReturn(user);
 
@@ -191,8 +191,8 @@ class AuthServiceImplTest {
                 .thenReturn(Optional.of(user));
 
         when(jwtUtil.generateToken("testuser")).thenReturn("newAccessToken");
-        when(jwtUtil.getExpirationTime()).thenReturn(300000L);
-        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getExpirationTime()).thenReturn(600000L);
+        when(jwtUtil.getRefreshTokenExpirationTime()).thenReturn(1200000L);
 
         AuthResponseDTO response = authService.refreshToken(refreshToken);
 

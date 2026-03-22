@@ -38,7 +38,6 @@
 - **Secure Password Encoding** - BCrypt password hashing
 - **User Registration & Login** - Create accounts and authenticate
 - **Token Expiration** - 1-hour token validity
-- **CORS Configuration** - Enable cross-origin requests
 
 ### 👥 Patient Management
 - **Patient Registration** - Complete patient data entry
@@ -160,7 +159,7 @@
 ## 🛠️ Technology Stack
 
 ### Core Framework
-- **Spring Boot 4.0.3** - Application framework
+- **Spring Boot** - Application framework
 - **Spring Security** - Authentication and authorization
 - **Spring Data JPA** - Database access and ORM
 
@@ -170,17 +169,16 @@
 - **JDBC** - Database connectivity
 
 ### Security
-- **JWT (JJWT 0.12.3)** - Token-based authentication
+- **JWT** - Token-based authentication
 - **BCrypt** - Password encryption
 - **Spring Security** - Authorization framework
 
 ### API & Documentation
 - **Springdoc OpenAPI** - Swagger UI integration
 - **Lombok** - Code generation and reduction
-- **Jackson** - JSON processing
 
 ### Build & Dependency Management
-- **Maven 3.6+** - Project build tool
+- **Maven ** - Project build tool
 - **Java 17+** - Programming language
 
 ## 🗄️ Database
